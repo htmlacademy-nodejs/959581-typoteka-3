@@ -20,6 +20,7 @@
   "homepage": "https://github.com/mikhailkaryamin/959581-typoteka-3#readme",
   "devDependencies": {
     "eslint": "8.17.0",
-    "eslint-config-htmlacademy": "0.6.0"
+    "eslint-config-htmlacademy": "0.6.0",
+    "lodash": "4.17.21"
   }
 }
