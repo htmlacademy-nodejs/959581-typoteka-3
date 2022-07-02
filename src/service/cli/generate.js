@@ -4,9 +4,8 @@ const fs = require(`fs`).promises;
 const chalk = require(`chalk`);
 const {random, range, shuffle} = require(`lodash`);
 
-const {ExitCode} = require(`../../constants`);
+const {ExitCode, MOCKS_PATH} = require(`../../constants`);
 
-const OUTPUT_FILE_NAME = `mocks.json`;
 const MS_IN_THREE_MONTH = 7889400000;
 const MIN_COUNT_CATEGORY = 1;
 const TextFilePath = {
@@ -86,11 +85,11 @@ module.exports = {
     const articles = generateArticles({count: countArticles, sentences, titles, categories});
 
     try {
-      await fs.writeFile(OUTPUT_FILE_NAME, JSON.stringify(articles, null, 2));
-      console.info(chalk.green(`Operation success. File created.`));
+      await fs.writeFile(MOCKS_PATH, JSON.stringify(articles, null, 2));
+      console.log(chalk.green(`Operation success. File created.`));
       process.exit(ExitCode.SUCCESS);
     } catch (error) {
-      console.error(chalk.red(`Can't write data to file...`));
+      console.log(chalk.red(`Can't write data to file...`));
       process.exit(ExitCode.ERROR);
     }
 
