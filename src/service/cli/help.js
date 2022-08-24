@@ -17,5 +17,5 @@ module.exports = {
     `;
 
     console.log(chalk.gray(text));
-  }
+  },
 };
