@@ -2,10 +2,10 @@
 
 const fs = require(`fs`).promises;
 const chalk = require(`chalk`);
-const {nanoid} = require(`nanoid`);
-const {random, range, shuffle} = require(`lodash`);
+const { nanoid } = require(`nanoid`);
+const { random, range, shuffle } = require(`lodash`);
 
-const {ExitCode, MOCKS_PATH} = require(`../../constants`);
+const { ExitCode, MOCKS_PATH } = require(`../../constants`);
 
 const ID_LENGTH = 6;
 const MS_IN_THREE_MONTH = 7889400000;
@@ -14,11 +14,11 @@ const TextFilePath = {
   CATEGORIES: `./data/categories.txt`,
   SENTENCES: `./data/sentences.txt`,
   TITLE: `./data/titles.txt`,
-  COMMENTS: `./data/comments.txt`
+  COMMENTS: `./data/comments.txt`,
 };
 const InputData = {
   MAX_COUNT: 1000,
-  DEFAULT_COUNT: 1,
+  DEFAULT_COUNT: 3,
 };
 const TextCount = {
   MIN: 1,
@@ -39,7 +39,7 @@ const getRandomDate = () => {
   return randomDate;
 };
 
-const generateArticles = ({count, sentences, categories, titles, comments}) => {
+const generateArticles = ({ count, sentences, categories, titles, comments }) => {
   const getAnnounce = () => {
     const maxCountAnnounce = random(TextCount.MIN + 1, TextCount.MAX_ANNOUNCE);
     return shuffle(sentences).slice(TextCount.MIN, maxCountAnnounce).join(` `);
@@ -57,14 +57,18 @@ const generateArticles = ({count, sentences, categories, titles, comments}) => {
     const countSentences = random(CommentsSetting.MIN_SENTENCES, CommentsSetting.MAX_SENTENCES);
 
     const getComment = () => {
-      const text = [...new Set(range(countSentences).map(() => {
-        const randomSentenceIndex = random(comments.length - 1);
-        return comments[randomSentenceIndex];
-      }))].join(` `);
+      const text = [
+        ...new Set(
+          range(countSentences).map(() => {
+            const randomSentenceIndex = random(comments.length - 1);
+            return comments[randomSentenceIndex];
+          }),
+        ),
+      ].join(` `);
 
       return {
         id: nanoid(ID_LENGTH),
-        text
+        text,
       };
     };
 
@@ -77,9 +81,9 @@ const generateArticles = ({count, sentences, categories, titles, comments}) => {
       createdDate: getRandomDate(),
       announce: getAnnounce(),
       fullText: getFullText(),
-      сategory: getRandomCategories(),
+      category: getRandomCategories(),
       id: nanoid(ID_LENGTH),
-      comments: getComments()
+      comments: getComments(),
     };
   });
 };
@@ -87,7 +91,7 @@ const generateArticles = ({count, sentences, categories, titles, comments}) => {
 const readTextFile = async (path) => {
   let data = [];
   try {
-    data = await fs.readFile(path, {encoding: `utf-8`});
+    data = await fs.readFile(path, { encoding: `utf-8` });
     return data.trim().split(`\n`);
   } catch (error) {
     console.log(chalk.red(`Can't read file...`));
@@ -112,7 +116,13 @@ module.exports = {
     const categories = await readTextFile(TextFilePath.CATEGORIES);
     const comments = await readTextFile(TextFilePath.COMMENTS);
 
-    const articles = generateArticles({count: countArticles, sentences, titles, categories, comments});
+    const articles = generateArticles({
+      count: countArticles,
+      sentences,
+      titles,
+      categories,
+      comments,
+    });
 
     try {
       await fs.writeFile(MOCKS_PATH, JSON.stringify(articles, null, 2));
@@ -122,6 +132,5 @@ module.exports = {
       console.log(chalk.red(`Can't write data to file...`));
       process.exit(ExitCode.ERROR);
     }
-
-  }
+  },
 };

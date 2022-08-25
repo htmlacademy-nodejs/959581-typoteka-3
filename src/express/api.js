@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const axios = require(`axios`);
 
@@ -11,12 +11,12 @@ class API {
   constructor(baseURL, timeout) {
     this._http = axios.create({
       baseURL,
-      timeout
+      timeout,
     });
   }
 
   async _load(url, options) {
-    const response = await this._http.request({url, ...options});
+    const response = await this._http.request({ url, ...options });
     return response.data;
   }
 
@@ -39,21 +39,21 @@ class API {
   async createArticle(data) {
     return this._load(`/articles`, {
       method: `POST`,
-      data
+      data,
     });
   }
 
   async createArticleComment(id, data) {
     return this._load(`/articles/${id}/comments`, {
       method: `POST`,
-      data
+      data,
     });
   }
 
   async editArticle(id, data) {
     return this._load(`/articles/${id}`, {
       method: `PUT`,
-      data
+      data,
     });
   }
 
@@ -70,7 +70,7 @@ class API {
   }
 
   async searchArticle(query) {
-    return this._load(`/search`, {params: {query}});
+    return this._load(`/search`, { params: { query } });
   }
 }
 
@@ -78,5 +78,5 @@ const defaultAPI = new API(defaultURL, TIMEOUT);
 
 module.exports = {
   API,
-  getAPI: () => defaultAPI
+  getAPI: () => defaultAPI,
 };

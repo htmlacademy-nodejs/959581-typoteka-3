@@ -1,0 +1,85 @@
+
+
+# Список категорий
+GET http://localhost:3000/api/category HTTP/1.1
+
+###
+
+# Поиск
+GET http://localhost:3000/api/search?query=Рок+—+это+протест HTTP/1.1
+
+###
+
+# Запрашивает все объявления
+GET http://localhost:3000/api/articles HTTP/1.1
+
+###
+
+# Запрашивает объявление с идентификатором :id
+
+GET http://localhost:3000/api/articles/fMMcdk HTTP/1.1
+
+###
+
+# Удаление объявления с идентификатором :id
+
+DELETE http://localhost:3000/api/articles/fMMcdk HTTP/1.1
+
+###
+
+# Добавление нового объявления
+# Почему-то не работает, хотя тесты все ок проходят. Потом еще попробую разобраться
+POST http://localhost:3000/api/articles HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "Самый крутой заголовок",
+  "announce": "Что-то интересное",
+  "fullText": "Описание чего-то интересного",
+  "category": [
+    "Первая",
+    "Вторая",
+    "Третья",
+  ],
+}
+
+###
+
+# Обновление объявления
+# Почему-то не работает, хотя тесты все ок проходят. Потом еще попробую разобраться
+PUT http://localhost:3000/api/articles/fMMcdk HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "Самый крутой заголовок",
+  "announce": "Что-то интересное",
+  "fullText": "Описание чего-то интересного",
+  "category": [
+    "Первая",
+    "Вторая",
+    "Третья",
+  ],
+}
+
+###
+
+# Список комментариев
+
+GET http://localhost:3000/api/articles/fMMcdk/comments HTTP/1.1
+
+###
+
+# Удаляет комментарий
+
+DELETE http://localhost:3000/api/articles/fMMcdk/comments/wG8MSx HTTP/1.1
+
+###
+
+# Добавляет новый комментарий к публикации
+
+POST http://localhost:3000/api/articles/fMMcdk/comments HTTP/1.1
+Content-Type: application/json
+
+{
+  "text": "Это новый комментарий"
+}
