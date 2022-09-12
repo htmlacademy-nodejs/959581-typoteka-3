@@ -17,14 +17,16 @@ app.use(`/`, mainRoutes);
 app.use(`/my`, myRoutes);
 app.use(`/articles`, articlesRoutes);
 
+app.use(express.static(path.resolve(__dirname, PUBLIC_DIR)));
+
 app.use((req, res) => res.status(HttpCode.BAD_REQUEST).render(`pages/errors/404`));
 
 app.use((err, _req, res, _next) => {
   res.status(HttpCode.INTERNAL_SERVER_ERROR).render(`pages/errors/500`);
+  console.log(err);
 });
 
 app.listen(process.env.PORT || DEFAULT_PORT);
 
-app.use(express.static(path.join(__dirname, PUBLIC_DIR)));
 app.set(`views`, path.resolve(__dirname, `templates`));
 app.set(`view engine`, `pug`);

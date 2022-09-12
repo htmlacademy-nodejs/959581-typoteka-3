@@ -14,4 +14,9 @@ node_modules/
 # Директория с собранными файлами проекта
 build/
 
+# Генерация моков
 mocks.json
+
+# Директория c загруженными фотографиями
+src/express/upload/img/*.*
+!src/express/upload/img/.gitkeep

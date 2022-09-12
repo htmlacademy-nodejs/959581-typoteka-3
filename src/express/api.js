@@ -29,7 +29,14 @@ class API {
   }
 
   async getCategories() {
-    return this._load(`/categories`);
+    return this._load(`/category`);
+  }
+
+  async getComments() {
+    const articles = await this.getArticles();
+    const comments = articles.map((article) => article.comments).flat();
+
+    return comments;
   }
 
   async getArticleComments(id) {
