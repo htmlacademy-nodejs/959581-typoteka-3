@@ -9,7 +9,10 @@ const { ExitCode, MOCKS_PATH } = require(`../../constants`);
 
 const ID_LENGTH = 6;
 const MS_IN_THREE_MONTH = 7889400000;
-const MIN_COUNT_CATEGORY = 1;
+const CountCategory = {
+  MIN: 1,
+  MAX: 3,
+};
 const TextFilePath = {
   CATEGORIES: `./data/categories.txt`,
   SENTENCES: `./data/sentences.txt`,
@@ -49,8 +52,8 @@ const generateArticles = ({ count, sentences, categories, titles, comments }) =>
     return shuffle(sentences).slice(TextCount.MIN, maxCountFullText).join(` `);
   };
   const getRandomCategories = () => {
-    const maxCountCategories = random(MIN_COUNT_CATEGORY + 1, categories.length);
-    return shuffle(categories).slice(MIN_COUNT_CATEGORY, maxCountCategories);
+    const maxCountCategories = random(CountCategory.MIN + 1, CountCategory.MAX);
+    return shuffle(categories).slice(CountCategory.MIN, maxCountCategories);
   };
   const getComments = () => {
     const countComments = random(CommentsSetting.MIN_COUNT, CommentsSetting.MAX_COUNT);
